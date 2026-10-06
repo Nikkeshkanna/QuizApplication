@@ -1,178 +1,170 @@
-# 🧠 Java Swing Quiz Application
+# Java Swing Quiz Application
 
-A simple **Quiz Application built using Java Swing**.
-The application displays multiple-choice questions, allows users to select an answer, and calculates the final score after completing the quiz.
+A desktop-based **Quiz Application** developed using **Java Swing**. The application provides a simple interactive interface for answering multiple-choice questions and automatically calculates the user's final score.
 
-## 📌 Features
+## Overview
 
-* 🎯 Multiple-choice quiz questions
-* ☕ Built using Java Swing
-* 🖥️ Simple graphical user interface
-* ✅ Automatic answer validation
-* 📊 Final score calculation
-* 🔘 Radio buttons for answer selection
-* ➡️ Next button to navigate between questions
-* 🚫 Prevents multiple answer selection using `ButtonGroup`
+The **Java Swing Quiz Application** is a lightweight desktop application designed to demonstrate core Java GUI development and event-driven programming.
 
-## 🛠️ Technologies Used
+Users can:
 
-* **Java**
-* **Java Swing**
-* **AWT Event Handling**
-* **JFrame**
-* **JRadioButton**
-* **JButton**
-* **JLabel**
-* **ButtonGroup**
-* **JOptionPane**
+* View multiple-choice questions
+* Select one answer from four options
+* Navigate through questions using the **Next** button
+* Receive immediate answer validation
+* View their final score after completing the quiz
 
-## 📂 Project Structure
+## Features
+
+* Multiple-choice question interface
+* Single-answer selection using radio buttons
+* Automatic answer validation
+* Real-time score tracking
+* Question navigation
+* Final score display
+* Simple and responsive desktop UI
+* Easy-to-extend question structure
+
+## Tech Stack
+
+| Technology       | Purpose                  |
+| ---------------- | ------------------------ |
+| **Java**         | Application development  |
+| **Java Swing**   | Graphical User Interface |
+| **AWT**          | Event handling           |
+| **JFrame**       | Application window       |
+| **JRadioButton** | Answer selection         |
+| **ButtonGroup**  | Single-option selection  |
+| **JButton**      | Navigation               |
+| **JOptionPane**  | Result display           |
+
+## Project Structure
 
 ```text
-QuizApplication/
+Java-Swing-Quiz-Application/
 │
 ├── QuizApplication.java
 └── README.md
 ```
 
-## 🎮 How It Works
+## Application Architecture
 
-The application stores questions and answers inside a two-dimensional `String` array.
+The application follows a simple event-driven approach:
+
+```text
+                ┌──────────────────┐
+                │  Start Application│
+                └────────┬─────────┘
+                         │
+                         ▼
+                ┌──────────────────┐
+                │ Display Question │
+                └────────┬─────────┘
+                         │
+                         ▼
+                ┌──────────────────┐
+                │ Select an Answer │
+                └────────┬─────────┘
+                         │
+                         ▼
+                ┌──────────────────┐
+                │ Click "Next"     │
+                └────────┬─────────┘
+                         │
+                         ▼
+                ┌──────────────────┐
+                │ Validate Answer  │
+                └────────┬─────────┘
+                         │
+                         ▼
+                ┌──────────────────┐
+                │ Update Score     │
+                └────────┬─────────┘
+                         │
+                  More Questions?
+                    /          \
+                  Yes           No
+                   │             │
+                   ▼             ▼
+            Next Question    Final Score
+```
+
+## Question Data Structure
+
+Questions and answers are maintained using a two-dimensional `String` array.
+
+```java
+String questions[][] = {
+    {
+        "Which language is platform independent?",
+        "C",
+        "C++",
+        "Java",
+        "Python",
+        "Java"
+    }
+};
+```
 
 Each question contains:
 
 ```text
-Question
-Option 1
-Option 2
-Option 3
-Option 4
-Correct Answer
+Index 0 → Question
+Index 1 → Option 1
+Index 2 → Option 2
+Index 3 → Option 3
+Index 4 → Option 4
+Index 5 → Correct Answer
 ```
 
-For example:
+This structure makes it easy to add or modify quiz questions.
+
+## Core Implementation
+
+### Question Display
+
+The `setData()` method loads the current question and its options into the GUI.
 
 ```java
-{"Which language is platform independent?",
- "C",
- "C++",
- "Java",
- "Python",
- "Java"}
+void setData() {
+    label.setText("Q" + (current + 1) + ": " + questions[current][0]);
+
+    rb1.setText(questions[current][1]);
+    rb2.setText(questions[current][2]);
+    rb3.setText(questions[current][3]);
+    rb4.setText(questions[current][4]);
+
+    bg.clearSelection();
+}
 ```
 
-The application displays one question at a time.
+### Answer Validation
 
-When the user selects an option and clicks **Next**:
-
-1. The selected answer is checked.
-2. If the answer is correct, the score is increased.
-3. The next question is displayed.
-4. After the last question, the final score is displayed.
-
-## 🖥️ Application Flow
-
-```text
-Start Application
-       ↓
-Display Question
-       ↓
-Select Answer
-       ↓
-Click "Next"
-       ↓
-Check Answer
-       ↓
-Update Score
-       ↓
-More Questions?
-   ↙           ↘
- Yes            No
- ↓              ↓
-Next Question   Show Final Score
-```
-
-## 🚀 How to Run
-
-### 1. Clone the Repository
-
-```bash
-git clone https://github.com/your-username/QuizApplication.git
-```
-
-### 2. Open the Project
-
-Open the project in any Java IDE such as:
-
-* IntelliJ IDEA
-* Eclipse
-* VS Code
-* NetBeans
-
-### 3. Compile the Program
-
-```bash
-javac QuizApplication.java
-```
-
-### 4. Run the Application
-
-```bash
-java QuizApplication
-```
-
-## 📋 Sample Questions
-
-The current application contains questions related to Java and Object-Oriented Programming.
-
-| # | Question                                          | Correct Answer |
-| - | ------------------------------------------------- | -------------- |
-| 1 | Which language is platform independent?           | Java           |
-| 2 | Which keyword is used to inherit a class in Java? | extends        |
-| 3 | Which of the following is not OOP concept?        | Recursion      |
-
-## 🧩 Important Java Concepts Used
-
-### `JFrame`
-
-Used to create the main application window.
+The `checkAnswer()` method compares the selected option with the correct answer.
 
 ```java
-public class QuizApplication extends JFrame
+boolean checkAnswer() {
+    String ans = "";
+
+    if (rb1.isSelected()) ans = rb1.getText();
+    if (rb2.isSelected()) ans = rb2.getText();
+    if (rb3.isSelected()) ans = rb3.getText();
+    if (rb4.isSelected()) ans = rb4.getText();
+
+    return ans.equals(questions[current][5]);
+}
 ```
 
-### `JRadioButton`
+### Score Calculation
 
-Used to display multiple-choice options.
+The score is incremented whenever the selected answer is correct.
 
 ```java
-JRadioButton rb1, rb2, rb3, rb4;
+if (checkAnswer())
+    count++;
 ```
 
-### `ButtonGroup`
-
-Ensures that only one option can be selected at a time.
-
-```java
-ButtonGroup bg = new ButtonGroup();
-
-bg.add(rb1);
-bg.add(rb2);
-bg.add(rb3);
-bg.add(rb4);
-```
-
-### `ActionListener`
-
-Used to handle the **Next** button click.
-
-```java
-btnNext.addActionListener(this);
-```
-
-### `JOptionPane`
-
-Used to display the final score.
+After all questions are completed, the final score is displayed.
 
 ```java
 JOptionPane.showMessageDialog(
@@ -181,35 +173,90 @@ JOptionPane.showMessageDialog(
 );
 ```
 
-## 🔮 Future Improvements
+## Sample Quiz
 
-The project can be extended with:
+The current version includes Java and Object-Oriented Programming questions.
 
-* ⏱️ Timer for each question
-* 📝 More quiz questions
-* 🏆 Different difficulty levels
-* 📚 Different categories
-* 🔀 Randomized questions
-* 🎨 Improved UI design
-* 📈 Score history
-* 🔄 Restart quiz option
-* 🏅 Leaderboard
-* 💾 Database integration
-* 👤 User login and registration
+| Question                                          | Correct Answer |
+| ------------------------------------------------- | -------------- |
+| Which language is platform independent?           | Java           |
+| Which keyword is used to inherit a class in Java? | extends        |
+| Which of the following is not an OOP concept?     | Recursion      |
 
-## 👨‍💻 Author
+## Getting Started
+
+### Prerequisites
+
+Make sure Java is installed on your system.
+
+Verify the installation:
+
+```bash
+java -version
+```
+
+### Clone the Repository
+
+```bash
+git clone https://github.com/your-username/Java-Swing-Quiz-Application.git
+```
+
+### Navigate to the Project
+
+```bash
+cd Java-Swing-Quiz-Application
+```
+
+### Compile
+
+```bash
+javac QuizApplication.java
+```
+
+### Run
+
+```bash
+java QuizApplication
+```
+
+## Future Enhancements
+
+The application can be further improved by adding:
+
+* [ ] Timer-based questions
+* [ ] Random question selection
+* [ ] Multiple quiz categories
+* [ ] Difficulty levels
+* [ ] Question database integration
+* [ ] User authentication
+* [ ] Score history
+* [ ] Leaderboard
+* [ ] Restart quiz functionality
+* [ ] Improved modern UI/UX
+* [ ] Database integration using JDBC
+* [ ] Persistent user results
+
+## Learning Outcomes
+
+This project demonstrates practical usage of:
+
+* Java Swing GUI development
+* Object-Oriented Programming
+* Event-driven programming
+* Action listeners
+* GUI components
+* Arrays and data management
+* Conditional statements
+* Methods and class design
+* Basic application state management
+
+## Author
 
 **Nikkeshkanna C V**
 
 Computer Science & Engineering Student
-Interested in **Java, Data Structures, Full Stack Development, and Software Engineering**.
+Java Developer | Full Stack Development Enthusiast
 
-## ⭐ Support
+## License
 
-If you found this project useful, consider giving the repository a ⭐ on GitHub.
-
----
-
-### 📄 License
-
-This project is created for **learning and educational purposes**.
+This project is developed for **educational and learning purposes**.
