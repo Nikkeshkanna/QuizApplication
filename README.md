@@ -1,44 +1,46 @@
-# Java Swing Quiz Application
+# 🧠 Java Swing Quiz Application
 
-A desktop-based **Quiz Application** developed using **Java Swing**. The application provides a simple interactive interface for answering multiple-choice questions and automatically calculates the user's final score.
+A desktop-based **Quiz Application** developed using **Java Swing**. The application provides an interactive graphical interface for answering multiple-choice questions, automatically validates answers, tracks the score, and displays the final result.
 
-## Overview
+---
 
-The **Java Swing Quiz Application** is a lightweight desktop application designed to demonstrate core Java GUI development and event-driven programming.
+## 📌 Overview
 
-Users can:
+The **Java Swing Quiz Application** is a lightweight desktop application built to demonstrate **Java GUI development, event-driven programming, and core Object-Oriented Programming concepts**.
 
-* View multiple-choice questions
-* Select one answer from four options
-* Navigate through questions using the **Next** button
-* Receive immediate answer validation
-* View their final score after completing the quiz
+The application presents questions one at a time and allows users to select an answer using radio buttons. After clicking **Next**, the selected answer is validated and the score is updated automatically.
 
-## Features
+### ✨ Key Highlights
 
-* Multiple-choice question interface
-* Single-answer selection using radio buttons
-* Automatic answer validation
-* Real-time score tracking
-* Question navigation
-* Final score display
-* Simple and responsive desktop UI
-* Easy-to-extend question structure
+* 🎯 Multiple-choice quiz questions
+* 🖥️ Interactive Java Swing GUI
+* 🔘 Single-answer selection using radio buttons
+* ✅ Automatic answer validation
+* 📊 Real-time score tracking
+* ➡️ Question-by-question navigation
+* 🏆 Final score calculation
+* 🧩 Easy-to-maintain question structure
+* 🚀 Simple architecture that can be extended easily
 
-## Tech Stack
+---
 
-| Technology       | Purpose                  |
-| ---------------- | ------------------------ |
-| **Java**         | Application development  |
-| **Java Swing**   | Graphical User Interface |
-| **AWT**          | Event handling           |
-| **JFrame**       | Application window       |
-| **JRadioButton** | Answer selection         |
-| **ButtonGroup**  | Single-option selection  |
-| **JButton**      | Navigation               |
-| **JOptionPane**  | Result display           |
+## 🛠️ Technologies Used
 
-## Project Structure
+| Technology       | Purpose                      |
+| ---------------- | ---------------------------- |
+| **Java**         | Core application development |
+| **Java Swing**   | Graphical User Interface     |
+| **AWT**          | Event handling               |
+| **JFrame**       | Main application window      |
+| **JLabel**       | Question display             |
+| **JRadioButton** | Answer selection             |
+| **ButtonGroup**  | Single-option selection      |
+| **JButton**      | Question navigation          |
+| **JOptionPane**  | Final result display         |
+
+---
+
+## 📂 Project Structure
 
 ```text
 Java-Swing-Quiz-Application/
@@ -47,66 +49,13 @@ Java-Swing-Quiz-Application/
 └── README.md
 ```
 
-## Application Architecture
+---
 
-The application follows a simple event-driven approach:
+## 🎮 How the Application Works
 
-```text
-                ┌──────────────────┐
-                │  Start Application│
-                └────────┬─────────┘
-                         │
-                         ▼
-                ┌──────────────────┐
-                │ Display Question │
-                └────────┬─────────┘
-                         │
-                         ▼
-                ┌──────────────────┐
-                │ Select an Answer │
-                └────────┬─────────┘
-                         │
-                         ▼
-                ┌──────────────────┐
-                │ Click "Next"     │
-                └────────┬─────────┘
-                         │
-                         ▼
-                ┌──────────────────┐
-                │ Validate Answer  │
-                └────────┬─────────┘
-                         │
-                         ▼
-                ┌──────────────────┐
-                │ Update Score     │
-                └────────┬─────────┘
-                         │
-                  More Questions?
-                    /          \
-                  Yes           No
-                   │             │
-                   ▼             ▼
-            Next Question    Final Score
-```
+The application stores questions, options, and correct answers inside a two-dimensional `String` array.
 
-## Question Data Structure
-
-Questions and answers are maintained using a two-dimensional `String` array.
-
-```java
-String questions[][] = {
-    {
-        "Which language is platform independent?",
-        "C",
-        "C++",
-        "Java",
-        "Python",
-        "Java"
-    }
-};
-```
-
-Each question contains:
+Each question follows this structure:
 
 ```text
 Index 0 → Question
@@ -117,13 +66,79 @@ Index 4 → Option 4
 Index 5 → Correct Answer
 ```
 
-This structure makes it easy to add or modify quiz questions.
+### Example
 
-## Core Implementation
+```java
+{
+    "Which language is platform independent?",
+    "C",
+    "C++",
+    "Java",
+    "Python",
+    "Java"
+}
+```
 
-### Question Display
+When the application starts:
 
-The `setData()` method loads the current question and its options into the GUI.
+1. The first question is displayed.
+2. The user selects one option.
+3. The user clicks **Next**.
+4. The application checks the selected answer.
+5. The score is increased if the answer is correct.
+6. The next question is displayed.
+7. After the final question, the total score is shown.
+
+---
+
+## 🔄 Application Flow
+
+```text
+                  ┌────────────────────┐
+                  │  Start Application  │
+                  └──────────┬─────────┘
+                             │
+                             ▼
+                  ┌────────────────────┐
+                  │  Display Question  │
+                  └──────────┬─────────┘
+                             │
+                             ▼
+                  ┌────────────────────┐
+                  │   Select Answer    │
+                  └──────────┬─────────┘
+                             │
+                             ▼
+                  ┌────────────────────┐
+                  │   Click "Next"     │
+                  └──────────┬─────────┘
+                             │
+                             ▼
+                  ┌────────────────────┐
+                  │  Validate Answer   │
+                  └──────────┬─────────┘
+                             │
+                             ▼
+                  ┌────────────────────┐
+                  │    Update Score    │
+                  └──────────┬─────────┘
+                             │
+                             ▼
+                       More Questions?
+                       /             \
+                     Yes              No
+                      │                │
+                      ▼                ▼
+              Next Question       Final Score
+```
+
+---
+
+## 🧩 Core Implementation
+
+### 1. Displaying Questions
+
+The `setData()` method loads the current question and its four options into the GUI.
 
 ```java
 void setData() {
@@ -138,9 +153,11 @@ void setData() {
 }
 ```
 
-### Answer Validation
+---
 
-The `checkAnswer()` method compares the selected option with the correct answer.
+### 2. Answer Validation
+
+The `checkAnswer()` method identifies the selected radio button and compares it with the correct answer.
 
 ```java
 boolean checkAnswer() {
@@ -155,16 +172,18 @@ boolean checkAnswer() {
 }
 ```
 
-### Score Calculation
+---
 
-The score is incremented whenever the selected answer is correct.
+### 3. Score Calculation
+
+The score is increased whenever the selected answer is correct.
 
 ```java
 if (checkAnswer())
     count++;
 ```
 
-After all questions are completed, the final score is displayed.
+After completing all questions, the application displays the final score:
 
 ```java
 JOptionPane.showMessageDialog(
@@ -173,27 +192,93 @@ JOptionPane.showMessageDialog(
 );
 ```
 
-## Sample Quiz
+---
 
-The current version includes Java and Object-Oriented Programming questions.
+## 📋 Sample Questions
 
-| Question                                          | Correct Answer |
-| ------------------------------------------------- | -------------- |
-| Which language is platform independent?           | Java           |
-| Which keyword is used to inherit a class in Java? | extends        |
-| Which of the following is not an OOP concept?     | Recursion      |
+The current version contains questions related to **Java and Object-Oriented Programming**.
 
-## Getting Started
+|  # | Question                                          | Correct Answer |
+| -: | ------------------------------------------------- | -------------- |
+|  1 | Which language is platform independent?           | Java           |
+|  2 | Which keyword is used to inherit a class in Java? | extends        |
+|  3 | Which of the following is not an OOP concept?     | Recursion      |
+
+---
+
+## 🧠 Java Concepts Demonstrated
+
+This project provides practical implementation of several Java concepts.
+
+### `JFrame`
+
+Used to create the main application window.
+
+```java
+public class QuizApplication extends JFrame
+```
+
+### `JRadioButton`
+
+Used for displaying multiple-choice answers.
+
+```java
+JRadioButton rb1, rb2, rb3, rb4;
+```
+
+### `ButtonGroup`
+
+Ensures that only one answer can be selected at a time.
+
+```java
+ButtonGroup bg = new ButtonGroup();
+
+bg.add(rb1);
+bg.add(rb2);
+bg.add(rb3);
+bg.add(rb4);
+```
+
+### `ActionListener`
+
+Handles the **Next** button event.
+
+```java
+btnNext.addActionListener(this);
+```
+
+### `JOptionPane`
+
+Displays the final quiz result.
+
+```java
+JOptionPane.showMessageDialog(
+    this,
+    "Quiz Completed!\nScore: " + count + "/" + questions.length
+);
+```
+
+---
+
+## 🚀 Getting Started
 
 ### Prerequisites
 
-Make sure Java is installed on your system.
+Make sure **Java JDK** is installed on your system.
 
-Verify the installation:
+Check your Java installation:
 
 ```bash
 java -version
 ```
+
+You should also have a Java compiler available:
+
+```bash
+javac -version
+```
+
+---
 
 ### Clone the Repository
 
@@ -207,56 +292,131 @@ git clone https://github.com/your-username/Java-Swing-Quiz-Application.git
 cd Java-Swing-Quiz-Application
 ```
 
-### Compile
+### Compile the Application
 
 ```bash
 javac QuizApplication.java
 ```
 
-### Run
+### Run the Application
 
 ```bash
 java QuizApplication
 ```
 
-## Future Enhancements
+---
 
-The application can be further improved by adding:
+## 🖥️ Application Preview
 
-* [ ] Timer-based questions
-* [ ] Random question selection
-* [ ] Multiple quiz categories
-* [ ] Difficulty levels
-* [ ] Question database integration
-* [ ] User authentication
-* [ ] Score history
-* [ ] Leaderboard
-* [ ] Restart quiz functionality
-* [ ] Improved modern UI/UX
-* [ ] Database integration using JDBC
-* [ ] Persistent user results
+> Add screenshots or a GIF of your application here to make the GitHub repository more attractive.
 
-## Learning Outcomes
+```text
+📸 Screenshot 1 — Quiz Interface
+📸 Screenshot 2 — Answer Selection
+📸 Screenshot 3 — Final Score
+```
 
-This project demonstrates practical usage of:
+For example:
+
+```markdown
+![Quiz Application](screenshots/quiz-interface.png)
+```
+
+---
+
+## 🔮 Future Enhancements
+
+The current application can be extended into a more complete quiz platform.
+
+### Planned Features
+
+* [ ] ⏱️ Timer for each question
+* [ ] 🔀 Randomized questions
+* [ ] 📝 Larger question bank
+* [ ] 📚 Multiple quiz categories
+* [ ] 🎯 Difficulty levels
+* [ ] 🔄 Restart quiz functionality
+* [ ] 📊 Detailed score analysis
+* [ ] 🏆 Leaderboard
+* [ ] 👤 User registration and login
+* [ ] 💾 Database integration using JDBC
+* [ ] 📈 Score history
+* [ ] 🎨 Modernized user interface
+* [ ] 🔐 Persistent user data
+
+---
+
+## 📚 Learning Outcomes
+
+Through this project, the following concepts were practiced:
 
 * Java Swing GUI development
-* Object-Oriented Programming
 * Event-driven programming
 * Action listeners
-* GUI components
-* Arrays and data management
-* Conditional statements
+* Object-Oriented Programming
+* Java arrays
 * Methods and class design
-* Basic application state management
+* Conditional statements
+* GUI component management
+* State management
+* Basic desktop application development
 
-## Author
+---
 
-**Nikkeshkanna C V**
+## 📈 Possible Improvements
 
-Computer Science & Engineering Student
-Java Developer | Full Stack Development Enthusiast
+The application currently uses a simple two-dimensional array for storing questions.
 
-## License
+For a larger application, the architecture could be improved by introducing:
+
+```text
+Question Model
+      ↓
+Question Service
+      ↓
+Quiz Controller
+      ↓
+Swing UI
+      ↓
+Database
+```
+
+This would make the application easier to maintain and scale.
+
+---
+
+## 👨‍💻 Author
+
+### Nikkeshkanna C V
+
+**Computer Science & Engineering Student**
+
+Java Developer | Full Stack Development Enthusiast | Problem Solver
+
+Interested in:
+
+* Java
+* Data Structures & Algorithms
+* Full Stack Development
+* Software Engineering
+* Application Development
+
+---
+
+## ⭐ Support
+
+If you found this project useful or interesting, consider giving the repository a ⭐ on GitHub.
+
+Your feedback and suggestions are always welcome!
+
+---
+
+## 📄 License
 
 This project is developed for **educational and learning purposes**.
+
+---
+
+<p align="center">
+  Built with ☕ Java & ❤️ by <strong>Nikkeshkanna C V</strong>
+</p>
